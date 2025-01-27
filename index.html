@@ -33,6 +33,12 @@
     />
     <link rel="stylesheet" href="styles/fonts.css" />
     <link rel="stylesheet" href="styles/style.css" />
+
+    <script src="js/update_font_weight.js" defer></script>
+    <script src="js/fixed_header.js" defer></script>
+    <script src="js/choose_tour.js" defer></script>
+    <script src="js/collect_tour.js" defer></script>
+    <script src="js/stories.js" defer></script>
   </head>
 
   <body class="roboto-regular">
@@ -794,6 +800,7 @@
                   type="text"
                   name="date"
                   class="form__input-field form__input-date form__input-date_start text text_gray"
+                  data-field="startDate"
                   placeholder="ДД.MM.ГГГГ"
                   pattern="\d{2}.\d{2}.\d{4}"
                   required
@@ -809,6 +816,7 @@
                   type="text"
                   name="date"
                   class="form__input-field form__input-date form__input-date_end text text_gray"
+                  data-field="endDate"
                   placeholder="ДД.MM.ГГГГ"
                   pattern="\d{2}.\d{2}.\d{4}"
                   required
@@ -1349,7 +1357,5 @@
         </ul>
       </div>
     </footer>
-
-    <script src="script.js"></script>
   </body>
 </html>

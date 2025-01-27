@@ -546,18 +546,9 @@ ul {
   padding: 0;
 }
 
-/* .form__input-field::placeholder,
-.form__select:required:invalid {
-  color: var(--gray-300);
-} */
-
 .form__input-field::placeholder {
   color: var(--gray-300);
 }
-
-/* .form__input-field:valid {
-  color: var(--black);
-} */
 
 .form__input-field:focus,
 .form__dropdown-button:focus {
@@ -584,24 +575,8 @@ ul {
 
 .form__custom-select {
   position: relative;
-  /* padding: 11.5px 10px; */
-  /* height: 46px; */
   width: 100%;
 }
-
-/* .form__select {
-  padding: 11.5px 10px;
-  height: 46px;
-
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-} */
-
-/* .form__custom-dropdown {
-  position: relative;
-  display: inline-block;
-} */
 
 .form__dropdown-button {
   padding: 10px;
@@ -623,6 +598,8 @@ ul {
   z-index: 1;
 
   width: 100%;
+  max-height: 172px;
+  overflow: auto;
 
   color: var(--black);
 
@@ -682,7 +659,10 @@ ul {
 }
 
 .form__radio-button input[type="radio"] {
-  display: none;
+  position: absolute;
+  z-index: -2;
+
+  opacity: 0;
 }
 
 .form__custom-radio-button {
@@ -773,7 +753,7 @@ ul {
 
 .reviews__cards {
   display: grid;
-  grid-template-columns: 1;
+  grid-template-columns: 1fr;
   gap: 18px;
 }
 
@@ -1338,6 +1318,10 @@ ul {
 
   .form__input-field:hover:not(:focus) {
     cursor: pointer;
+  }
+
+  .form__dropdown-content {
+    max-height: 272px;
   }
 
   .form__dropdown-item {
