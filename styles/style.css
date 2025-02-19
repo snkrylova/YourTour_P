@@ -35,6 +35,25 @@ body {
   overflow-x: hidden;
 }
 
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--beige-200);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--orange-200);
+  border-radius: 10px;
+}
+
 p,
 ul {
   margin: 0;
@@ -44,18 +63,6 @@ ul {
 .container {
   margin: 0 auto;
   padding: 0 21px;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: var(--beige-200);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--orange-200);
 }
 
 /* Typography start */
@@ -203,23 +210,18 @@ ul {
 /* header start */
 
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  position: absolute;
+  z-index: 10;
 
   width: 100vw;
 
   transition: all 0.5s ease;
-  opacity: 1;
-}
-
-.header.hidden {
-  opacity: 0;
-  pointer-events: none;
 }
 
 .header.fixed {
+  position: fixed;
+  top: 0;
+
   background: rgba(243, 239, 232, 0.6);
   backdrop-filter: blur(54px);
 }
@@ -462,27 +464,27 @@ ul {
 }
 
 .choose-tour__card:nth-child(1) {
-  background-image: url("/assets/images/card_tour_photo_1.jpg");
+  background-image: url("../assets/images/card_tour_photo_1.jpg");
 }
 
 .choose-tour__card:nth-child(2) {
-  background-image: url("/assets/images/card_tour_photo_2.jpg");
+  background-image: url("../assets/images/card_tour_photo_2.jpg");
 }
 
 .choose-tour__card:nth-child(3) {
-  background-image: url("/assets/images/card_tour_photo_3.jpg");
+  background-image: url("../assets/images/card_tour_photo_3.jpg");
 }
 
 .choose-tour__card:nth-child(4) {
-  background-image: url("/assets/images/card_tour_photo_4.jpg");
+  background-image: url("../assets/images/card_tour_photo_4.jpg");
 }
 
 .choose-tour__card:nth-child(5) {
-  background-image: url("/assets/images/card_tour_photo_5.jpg");
+  background-image: url("../assets/images/card_tour_photo_5.jpg");
 }
 
 .choose-tour__card:nth-child(6) {
-  background-image: url("/assets/images/card_tour_photo_6.jpg");
+  background-image: url("../assets/images/card_tour_photo_6.jpg");
 }
 
 .choose-tour__card-content {
@@ -591,6 +593,10 @@ ul {
   border-radius: inherit;
 
   cursor: pointer;
+}
+
+.form__dropdown-button.active {
+  color: var(--black);
 }
 
 .form__dropdown-content {
