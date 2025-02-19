@@ -10,45 +10,54 @@ const fields = {
     inputElement: document.querySelector(".form__name"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   tour: {
     inputElement: document.querySelector(".form__custom-select"),
     dropdownButton: document.querySelector(".form__dropdown-button"),
+    dropdownButtonPlaceholder: "Куда хотите ехать",
     dropdownContent: document.querySelector(".form__dropdown-content"),
     items: document.querySelectorAll(".form__dropdown-item"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   email: {
     inputElement: document.querySelector(".form__email"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   tel: {
     inputElement: document.querySelector(".form__tel"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   startDate: {
     inputElement: document.querySelector(".form__input-date_start"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   endDate: {
     inputElement: document.querySelector(".form__input-date_end"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   age: {
     inputElement: Array.from(document.querySelectorAll(".form__radio-input")),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
   licenseAgreement: {
     inputElement: document.querySelector(".form__checkbox-input"),
     customCheckbox: document.querySelector(".form__custom-checkbox"),
     errorMessageElement: null,
     interacted: false,
+    error: false,
   },
 };
 
@@ -98,8 +107,10 @@ function interactFlag(field) {
 
 function validatePattern(inputElement, inputValue, pattern) {
   if (pattern.test(inputValue)) {
+    inputElement.error = false;
     hiddenErrorMessage(inputElement.errorMessageElement);
   } else {
+    inputElement.error = true;
     showErrorMessage(inputElement.errorMessageElement);
   }
 }
@@ -124,7 +135,7 @@ collectTourForm.addEventListener("submit", function (event) {
   for (const key in fields) {
     const field = fields[key];
 
-    if (!field.interacted) {
+    if (!field.interacted || field.error) {
       showErrorMessage(field.errorMessageElement);
       hasError = true;
     }
@@ -132,11 +143,32 @@ collectTourForm.addEventListener("submit", function (event) {
 
   if (!hasError) {
     // заглушка, пока нет ссылки на обработчик формы
+    resetCustomElement();
     this.reset();
   }
 });
 
+function resetCustomElement() {
+  fields.tour.dropdownButton.classList.remove("active");
+  fields.tour.dropdownButton.textContent =
+    fields.tour.dropdownButtonPlaceholder;
+
+  fields.licenseAgreement.customCheckbox.classList.remove("checked");
+}
+
+collectTourForm.addEventListener("reset", function () {
+  for (const key in fields) {
+    const field = fields[key];
+
+    hiddenErrorMessage(field.errorMessageElement);
+  }
+
+  resetCustomElement();
+  this.reset();
+});
+
 fields.name.inputElement.addEventListener("input", function () {
+  fields.name.error = false;
   hiddenErrorMessage(fields.name.errorMessageElement);
 });
 
@@ -162,10 +194,11 @@ fields.tour.items.forEach((item) => {
   item.addEventListener("click", function () {
     selectedValue = this.dataset.value;
     fields.tour.dropdownButton.textContent = this.textContent;
-    fields.tour.dropdownButton.style.color = "var(--black)";
+    fields.tour.dropdownButton.classList.add("active");
     fields.tour.dropdownContent.classList.remove("show");
 
     interactFlag(fields.tour);
+    fields.tour.error = false;
     hiddenErrorMessage(fields.tour.errorMessageElement);
   });
 });
@@ -176,13 +209,16 @@ fields.tour.dropdownButton.addEventListener("blur", function () {
   }
 
   if (!selectedValue) {
+    fields.tour.error = true;
     showErrorMessage(fields.tour.errorMessageElement);
   } else {
+    fields.tour.error = false;
     hiddenErrorMessage(fields.tour.errorMessageElement);
   }
 });
 
 fields.email.inputElement.addEventListener("input", function () {
+  fields.email.error = false;
   hiddenErrorMessage(fields.email.errorMessageElement);
 });
 
@@ -207,13 +243,18 @@ fields.tel.inputElement.addEventListener("input", function () {
     }
   );
 
+  fields.tel.error = false;
   hiddenErrorMessage(fields.tel.errorMessageElement);
 });
 
 fields.tel.inputElement.addEventListener("blur", function () {
-  if (this.value.length < 11) {
+  let value = this.value.replace(/\D/g, "");
+
+  if (value.length < 11) {
+    fields.tel.error = true;
     showErrorMessage(fields.tel.errorMessageElement);
   } else {
+    fields.tel.error = false;
     hiddenErrorMessage(fields.tel.errorMessageElement);
   }
 });
@@ -226,6 +267,7 @@ dateInputs.forEach(function (dateInput) {
 
     this.value = formatDate(this.value);
 
+    fields[fieldKey].error = false;
     hiddenErrorMessage(fields[fieldKey].errorMessageElement);
   });
 });
@@ -233,10 +275,13 @@ dateInputs.forEach(function (dateInput) {
 dateInputs.forEach(function (dateInput) {
   dateInput.addEventListener("blur", function () {
     const fieldKey = this.dataset.field;
+    let value = this.value.replace(/\D/g, "");
 
-    if (this.value.length < 8) {
+    if (value.length < 8) {
+      fields[fieldKey].error = true;
       showErrorMessage(fields[fieldKey].errorMessageElement);
     } else {
+      fields[fieldKey].error = false;
       hiddenErrorMessage(fields[fieldKey].errorMessageElement);
     }
   });
@@ -244,6 +289,7 @@ dateInputs.forEach(function (dateInput) {
 
 fields.age.inputElement.forEach((radio) => {
   radio.addEventListener("change", function () {
+    fields.age.error = false;
     hiddenErrorMessage(fields.age.errorMessageElement);
   });
 });
@@ -256,6 +302,7 @@ fields.licenseAgreement.inputElement.addEventListener("change", function () {
   fields.licenseAgreement.interacted = this.checked;
 
   if (fields.licenseAgreement.interacted) {
+    fields.licenseAgreement.error = false;
     hiddenErrorMessage(fields.licenseAgreement.errorMessageElement);
   }
 });

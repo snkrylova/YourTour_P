@@ -28,12 +28,6 @@ chooseTourButton.forEach((button) => {
   });
 });
 
-chooseTourCard.forEach((card) => {
-  card.addEventListener("click", () => {
-    card.querySelector(".link_more").click();
-  });
-});
-
 chooseTourButton.forEach((button) => {
   button.addEventListener("click", () => {
     const target = button.dataset.target.split("__")[1];
@@ -46,3 +40,10 @@ chooseTourButton.forEach((button) => {
     activeCard.classList.remove("hidden");
   });
 });
+
+// Редиректы отключены по требованию
+/* chooseTourCard.forEach((card) => {
+  card.addEventListener("click", () => {
+    card.querySelector(".link_more").click();
+  });
+}); */
